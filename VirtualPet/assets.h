@@ -1,4 +1,3 @@
-#include <avr/pgmspace.h>
 #pragma once
 
 const unsigned char PROGMEM rabbitBitmap[] = {

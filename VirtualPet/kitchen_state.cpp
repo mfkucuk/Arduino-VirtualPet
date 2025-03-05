@@ -1,8 +1,9 @@
-#include "Adafruit_SSD1306.h"
-#include "global.h"
 #include "kitchen_state.h"
 
 #include "assets.h"
+#include "global.h"
+#include "Adafruit_SSD1306.h"
+#include "particle.h"
 #include "utils.h"
 
 void KitchenState::setup() {
@@ -12,7 +13,6 @@ void KitchenState::setup() {
 }
 
 void KitchenState::update() {
-
 }
 
 void KitchenState::render() {
@@ -42,7 +42,7 @@ void KitchenState::input(int pin, bool pressed, bool longPressed) {
     }
   } else if (pin == MIDDLE_BUTTON_PIN && pressed) {
     if (currentAction == 0) {
-      
+
     }
   }
 }

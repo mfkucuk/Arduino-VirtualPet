@@ -24,7 +24,7 @@ void Stats::load() {
   hunger = EEPROM.read(HUNGER_ADDRESS);
 }
 
-void Stats::updateAge(int by) {
+void Stats::updateAge(const int& by) {
   age += by;
   EEPROM.write(AGE_ADDRESS, age);
 }

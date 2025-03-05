@@ -20,13 +20,19 @@
 
 #define HOLD_THRESHOLD 500
 
-int buttonPins[3] = { LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, MIDDLE_BUTTON_PIN };
+const int PROGMEM buttonPins[3] = { LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, MIDDLE_BUTTON_PIN };
 int buttons[3];
 bool buttonsPressed[3];
 bool buttonsHeld[3];
 unsigned long pressStartTimes[3];
 
 Global global;
+
+extern int __heap_start, *__brkval;
+int freeMemory() {
+  int v;
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
 
 void setup() {
   Serial.begin(9600);
@@ -68,7 +74,8 @@ void setup() {
   global.stats = &stats;
   global.stats->load();
 
-  global.stats->updateMoney(5);
+  ParticleSystem particleSystem;
+  global.particleSystem = &particleSystem;
 
   global.stateManager->changeState(MENU_STATE);
 

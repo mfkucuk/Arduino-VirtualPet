@@ -1,5 +1,5 @@
+#include "particle.h"
 #pragma once
-#include <avr/pgmspace.h>
 
 // pins
 #define BUZZER_PIN 5
@@ -27,11 +27,13 @@
 struct StateManager;
 struct Adafruit_SSD1306;
 struct Stats;
+struct ParticleSystem;
 
 struct Global {
   StateManager* stateManager;
   Adafruit_SSD1306* display;
   Stats* stats;
+  ParticleSystem* particleSystem;
 };
 
 extern Global global;

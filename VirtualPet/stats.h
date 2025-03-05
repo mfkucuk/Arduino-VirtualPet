@@ -19,7 +19,7 @@ struct Stats {
   int hunger;
 
   void load();
-  void updateAge(int by);
+  void updateAge(const int& by);
   void updateMoney(int by);
   void updateHappiness(int by);
   void updateEnergy(int by);
