@@ -26,10 +26,12 @@
 
 struct StateManager;
 struct Adafruit_SSD1306;
+struct Stats;
 
 struct Global {
   StateManager* stateManager;
   Adafruit_SSD1306* display;
+  Stats* stats;
 };
 
 extern Global global;

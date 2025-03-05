@@ -16,6 +16,8 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+#include "stats.h"
+
 #define HOLD_THRESHOLD 500
 
 int buttonPins[3] = { LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, MIDDLE_BUTTON_PIN };
@@ -55,12 +57,18 @@ void setup() {
   stateManager.states[PONG_STATE] = &pong;
 
   global.stateManager = &stateManager;
-  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
   global.display = &display;
   if (!global.display->begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
     Serial.println(F("SSD1306 allocation failed"));
     while (true);
   }
+
+  Stats stats;
+  global.stats = &stats;
+  global.stats->load();
+
+  global.stats->updateMoney(5);
 
   global.stateManager->changeState(MENU_STATE);
 

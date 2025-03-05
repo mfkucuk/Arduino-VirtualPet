@@ -2,6 +2,8 @@
 
 #include "assets.h"
 #include "utils.h"
+#include "Adafruit_SSD1306.h"
+#include "global.h"
 
 void BedroomState::setup() {
   icons[0] = zzzBitmap;
@@ -15,10 +17,7 @@ void BedroomState::update() {
 }
 
 void BedroomState::render() {
-  int totalWidth = actionCount * 16;
-  int spacing = (128 - totalWidth) / (actionCount + 1);
-
-  int x = spacing; // Start with initial spacing
+  int x = (128 - actionCount * 16) / (actionCount + 1); // Start with initial spacing
 
   for (int i = 0; i < actionCount; i++) {
     if (i == currentAction) {
@@ -27,8 +26,13 @@ void BedroomState::render() {
       global.display->drawBitmap(x, 1, icons[i], 16, 14, SSD1306_WHITE);
     }
 
-    x += 16 + spacing; // Move to the next icon with spacing
+    x += 16 + (128 - actionCount * 16) / (actionCount + 1); // Move to the next icon with spacing
   }
+
+  global.display->drawBitmap(8, 32, bedBitmap, 24, 14, SSD1306_WHITE);
+  global.display->drawBitmap(76, 18, clockBitmap, 16, 16, SSD1306_WHITE);
+  global.display->drawBitmap(100, 23, wardrobeBitmap, 16, 24, SSD1306_WHITE);
+  global.display->drawBitmap(36, 24, nightstandBitmap, 16, 22, SSD1306_WHITE);
 }
 
 void BedroomState::input(int pin, bool pressed, bool longPressed) {

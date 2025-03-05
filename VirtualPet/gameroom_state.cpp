@@ -1,8 +1,9 @@
-#include "global.h"
 #include "gameroom_state.h"
 
 #include "assets.h"
 #include "utils.h"
+#include "global.h"
+#include "Adafruit_SSD1306.h"
 #include "state_manager.h"
 
 void GameroomState::setup() {
@@ -16,10 +17,7 @@ void GameroomState::update() {
 }
 
 void GameroomState::render() {
-  int totalWidth = actionCount * 16;
-  int spacing = (128 - totalWidth) / (actionCount + 1);
-
-  int x = spacing; // Start with initial spacing
+  int x = (128 - actionCount * 16) / (actionCount + 1); // Start with initial spacing
 
   for (int i = 0; i < actionCount; i++) {
     if (i == currentAction) {
@@ -28,8 +26,12 @@ void GameroomState::render() {
       global.display->drawBitmap(x, 1, icons[i], 16, 14, SSD1306_WHITE);
     }
 
-    x += 16 + spacing; // Move to the next icon with spacing
+    x += 16 + (128 - actionCount * 16) / (actionCount + 1); // Move to the next icon with spacing
   }
+
+  global.display->drawBitmap(88, 18, televisionBitmap, 24, 18, SSD1306_WHITE);
+  global.display->drawBitmap(84, 42, couchBitmap, 32, 16, SSD1306_WHITE);
+  global.display->drawBitmap(16, 18, windowBitmap, 24, 16, SSD1306_WHITE);
 }
 
 void GameroomState::input(int pin, bool pressed, bool longPressed) {

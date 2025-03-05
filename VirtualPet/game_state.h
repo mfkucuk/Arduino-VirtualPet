@@ -7,8 +7,10 @@
 
 struct GameState : public State {
 
-  int currentRoom;
+  int currentRoom = 0;
   State* rooms[3];
+
+  bool statsOpen = false;
 
   void setup() override;
   void update() override;

@@ -1,3 +1,5 @@
+#include "Adafruit_SSD1306.h"
+#include "global.h"
 #include "kitchen_state.h"
 
 #include "assets.h"
@@ -28,7 +30,8 @@ void KitchenState::render() {
 
   global.display->drawBitmap(100, 18, kitchenShelfBitmap, 24, 14, SSD1306_WHITE);
   global.display->drawBitmap(111, 35, kitchenTableBitmap, 16, 26, SSD1306_WHITE);
-  global.display->drawBitmap(10, 20, kitchenFurnaceBitmap, 16, 33, SSD1306_WHITE);
+  global.display->drawBitmap(10, 22, kitchenFurnaceBitmap, 16, 33, SSD1306_WHITE);
+  global.display->drawBitmap(34, 18, doorBitmap, 16, 22, SSD1306_WHITE);
 }
 
 void KitchenState::input(int pin, bool pressed, bool longPressed) {
