@@ -20,7 +20,7 @@
 
 #define HOLD_THRESHOLD 500
 
-const int PROGMEM buttonPins[3] = { LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, MIDDLE_BUTTON_PIN };
+int buttonPins[3] = { LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, MIDDLE_BUTTON_PIN };
 int buttons[3];
 bool buttonsPressed[3];
 bool buttonsHeld[3];

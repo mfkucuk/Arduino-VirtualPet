@@ -13,6 +13,7 @@ void KitchenState::setup() {
 }
 
 void KitchenState::update() {
+  global.particleSystem->update();
 }
 
 void KitchenState::render() {
@@ -32,6 +33,8 @@ void KitchenState::render() {
   global.display->drawBitmap(111, 35, kitchenTableBitmap, 16, 26, SSD1306_WHITE);
   global.display->drawBitmap(10, 22, kitchenFurnaceBitmap, 16, 33, SSD1306_WHITE);
   global.display->drawBitmap(34, 18, doorBitmap, 16, 22, SSD1306_WHITE);
+
+  global.particleSystem->render();
 }
 
 void KitchenState::input(int pin, bool pressed, bool longPressed) {
@@ -42,7 +45,9 @@ void KitchenState::input(int pin, bool pressed, bool longPressed) {
     }
   } else if (pin == MIDDLE_BUTTON_PIN && pressed) {
     if (currentAction == 0) {
-
+      global.particleSystem->x = 64;
+      global.particleSystem->y = 28;
+      global.particleSystem->play(-1, 1, 0, 1, 1, 0.2f);
     }
   }
 }
