@@ -14,6 +14,6 @@ void StateManager::render() {
   states[currentState]->render();
 }
 
-void StateManager::input(int pin, bool pressed) {
-  states[currentState]->input(pin, pressed);
+void StateManager::input(int pin, bool pressed, bool longPressed) {
+  states[currentState]->input(pin, pressed, longPressed);
 }

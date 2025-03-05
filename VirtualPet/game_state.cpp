@@ -10,9 +10,6 @@
 
 void GameState::setup() {
   rooms[currentRoom]->setup();
-
-  x = SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2;
-  y = SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2;
 }
 
 void GameState::update() {
@@ -20,18 +17,21 @@ void GameState::update() {
 }
 
 void GameState::render() {
+  global.display->drawRect(0, 0, 128, 16, SSD1306_WHITE);
+
   rooms[currentRoom]->render();
 
-  global.display->drawBitmap(x, y, rabbitBitmap, 16, 26, SSD1306_WHITE);
+  global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 10, rabbitBitmap, 16, 26, SSD1306_WHITE);
 }
 
-void GameState::input(int pin, bool pressed) {
-  if (pin == LEFT_BUTTON_PIN && pressed) {
+void GameState::input(int pin, bool pressed, bool longPressed) {
+  if (pin == RIGHT_BUTTON_PIN && pressed) {
     currentRoom++;
     if (currentRoom > 2) {
       currentRoom = 0;
     }
+    rooms[currentRoom]->setup();
   }
 
-  rooms[currentRoom]->input(pin, pressed);
+  rooms[currentRoom]->input(pin, pressed, longPressed);
 }

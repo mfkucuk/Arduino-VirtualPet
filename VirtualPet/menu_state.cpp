@@ -8,15 +8,23 @@
 #include <Adafruit_SSD1306.h>
 
 void MenuState::setup() {
-  Serial.println("Menu state");
 }
 
 void MenuState::update() {}
 
-void MenuState::render() {}
+void MenuState::render() {
+  global.display->setTextSize(1);
+  global.display->setTextColor(SSD1306_WHITE);
+  global.display->setCursor(45, 30);
 
-void MenuState::input(int pin, bool pressed) {
-  if (pin == LEFT_BUTTON_PIN && pressed) {
+  global.display->println(F("RIBBIT"));
+
+  global.display->setCursor(15, 55);
+  global.display->println(F("[Press to START]"));
+}
+
+void MenuState::input(int pin, bool pressed, bool longPressed) {
+  if (pressed) {
 
     delay(100);
 
