@@ -4,7 +4,7 @@ struct State;
 
 struct StateManager {
   int currentState;
-  State* states[3];
+  State* states[2];
   
   void changeState(int state);
   void update();

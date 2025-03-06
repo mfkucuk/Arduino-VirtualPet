@@ -4,7 +4,6 @@
 
 struct BedroomState : public State {
 
-  const unsigned char* icons[2];
   int currentAction;
   int actionCount;
 

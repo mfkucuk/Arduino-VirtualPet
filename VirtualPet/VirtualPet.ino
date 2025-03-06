@@ -3,7 +3,6 @@
 #include "global.h"
 #include "state_manager.h"
 
-#include "menu_state.h"
 #include "game_state.h"
 
 #include "kitchen_state.h"
@@ -39,7 +38,6 @@ void setup() {
   cute.init(BUZZER_PIN);
 
   StateManager stateManager;
-  MenuState menu;
   GameState game;
 
   global.gameState = &game;
@@ -56,7 +54,6 @@ void setup() {
   game.rooms[GAMEROOM_STATE] = &gameroom;
   
   stateManager.currentState = 0;
-  stateManager.states[MENU_STATE] = &menu;
   stateManager.states[GAME_STATE] = &game;
   stateManager.states[PONG_STATE] = &pong;
 
@@ -75,7 +72,7 @@ void setup() {
   ParticleSystem particleSystem;
   global.particleSystem = &particleSystem;
 
-  global.stateManager->changeState(MENU_STATE);
+  global.stateManager->changeState(GAME_STATE);
 
 }
 

@@ -2,12 +2,12 @@
 
 #include <EEPROM.h>
 
-#define FIRST_TIME_ADDRESS 10
+#define FIRST_TIME_ADDRESS 4
 
 #define AGE_ADDRESS 0
-#define HAPPINESS_ADDRESS 2
-#define ENERGY_ADDRESS 3
-#define HUNGER_ADDRESS 4
+#define HAPPINESS_ADDRESS 1
+#define ENERGY_ADDRESS 2
+#define HUNGER_ADDRESS 3
 
 struct Stats {
 

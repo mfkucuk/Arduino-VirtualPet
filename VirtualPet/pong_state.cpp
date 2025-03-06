@@ -15,23 +15,15 @@ void PongState::setup() {
   ball.x = 64;
   ball.y = 32;
   roundStarted = false;
-  paddle1.x = 5;
   paddle1.y = 24;
-  paddle2.x = 118;
   paddle2.y = 24;
 }
 
 void PongState::update() {
 
-  if (playerScore == 7) {
+  if (playerScore == 7 || computerScore == 7) {
     delay(2000);
     global.stats->updateHappiness(10);
-    global.stateManager->changeState(GAME_STATE);
-  }
-
-  if (computerScore == 7) {
-    delay(2000);
-    global.stats->updateHappiness(5);
     global.stateManager->changeState(GAME_STATE);
   }
 
@@ -46,7 +38,7 @@ void PongState::update() {
   }
 
   // Ball collision with paddle1 (left paddle)
-if (ball.x - 2 <= paddle1.x + 5 &&
+if (ball.x - 2 <= 10 &&
     ball.y + 2 >= paddle1.y &&
     ball.y - 2 <= paddle1.y + 16) {
 
@@ -55,12 +47,12 @@ if (ball.x - 2 <= paddle1.x + 5 &&
         ball.vy = -ball.vy;  // Reverse vertical velocity if corner hit
     } else {
       ball.vx = -ball.vx;  // Reverse horizontal velocity
-      ball.x = paddle1.x + 5 + 2;  // Prevent sticking
+      ball.x = 10 + 2;  // Prevent sticking
     }
 }
 
 // Ball collision with paddle2 (right paddle)
-if (ball.x + 2 >= paddle2.x &&
+if (ball.x + 2 >= 118 &&
     ball.y + 2 >= paddle2.y &&
     ball.y - 2 <= paddle2.y + 16) {
 
@@ -71,7 +63,7 @@ if (ball.x + 2 >= paddle2.x &&
         ball.vy = -ball.vy;  // Reverse vertical velocity if corner hit
     } else {
       ball.vx = -ball.vx;  // Reverse horizontal velocity
-      ball.x = paddle2.x - 2;  // Prevent sticking
+      ball.x = 118 - 2;  // Prevent sticking
     }
     
 }
@@ -106,8 +98,8 @@ if (ball.x + 2 >= paddle2.x &&
 
 void PongState::render() {
   global.display->fillCircle(ball.x, ball.y, 2, SSD1306_WHITE);
-  global.display->fillRect(paddle1.x, paddle1.y, 5, 16, SSD1306_WHITE);
-  global.display->fillRect(paddle2.x, paddle2.y, 5, 16, SSD1306_WHITE);
+  global.display->fillRect(5, paddle1.y, 5, 16, SSD1306_WHITE);
+  global.display->fillRect(118, paddle2.y, 5, 16, SSD1306_WHITE);
 
   global.display->setTextColor(SSD1306_WHITE);
   global.display->setCursor(64 - 12, 2);

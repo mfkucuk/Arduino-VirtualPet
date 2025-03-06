@@ -7,8 +7,7 @@
 #define MIDDLE_BUTTON_PIN 8
 
 // game states
-#define MENU_STATE 0
-#define GAME_STATE 1
+#define GAME_STATE 0
 
 // rooms in game state
 #define KITCHEN_STATE 0
@@ -16,7 +15,7 @@
 #define GAMEROOM_STATE 2
 
 // games
-#define PONG_STATE 2
+#define PONG_STATE 1
 
 // oled
 #define SCREEN_WIDTH 128

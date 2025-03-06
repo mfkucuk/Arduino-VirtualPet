@@ -8,8 +8,6 @@
 #include <CuteBuzzerSounds.h>
 
 void BedroomState::setup() {
-  icons[0] = zzzBitmap;
-  icons[1] = hatBitmap;
   currentAction = 0;
   actionCount = 2;
 }
@@ -29,9 +27,17 @@ void BedroomState::render() {
 
   for (int i = 0; i < actionCount; i++) {
     if (i == currentAction) {
-      drawInvertBitmapColor(x, 1, icons[i], 16, 14, SSD1306_WHITE);
+      if (i == 0) {
+        drawInvertBitmapColor(x, 1, zzzBitmap, 16, 14, SSD1306_WHITE);
+      } else {
+        drawInvertBitmapColor(x, 1, hatBitmap, 16, 14, SSD1306_WHITE);
+      }
     } else {
-      global.display->drawBitmap(x, 1, icons[i], 16, 14, SSD1306_WHITE);
+      if (i == 0) {
+        global.display->drawBitmap(x, 1, zzzBitmap, 16, 14, SSD1306_WHITE);
+      } else {
+        global.display->drawBitmap(x, 1, hatBitmap, 16, 14, SSD1306_WHITE);
+      }
     }
 
     x += 16 + (128 - actionCount * 16) / (actionCount + 1); // Move to the next icon with spacing

@@ -76,10 +76,6 @@ void GameState::render() {
 }
 
 void GameState::input(int pin, bool pressed, bool longPressed) {
-  if (pin == MIDDLE_BUTTON_PIN && longPressed) {
-    global.stateManager->changeState(MENU_STATE);
-  }
-
   if (pin == LEFT_BUTTON_PIN && longPressed) {
     statsOpen = !statsOpen; 
   }
