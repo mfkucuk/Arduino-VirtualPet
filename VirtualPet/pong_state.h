@@ -6,17 +6,16 @@ struct PongState : public State {
 
   struct Ball {
     int x, y;
-    int vx, vy;
-    int radius;
+    int vy, vx;
   };
 
   struct Paddle {
-    int x, y, w, h;
+    int x, y;
   };
 
-  Ball ball { 64, 32, 2, 2, 2 };
-  Paddle paddle1 { 5, 24, 5, 16 };
-  Paddle paddle2 { 118, 24, 5, 16 };
+  Ball ball { 64, 32, 3, 3 };
+  Paddle paddle1 { 5, 24 };
+  Paddle paddle2 { 118, 24 };
   int playerScore;
   int computerScore;
   bool roundStarted;

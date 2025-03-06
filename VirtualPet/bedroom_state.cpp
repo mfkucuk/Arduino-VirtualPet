@@ -4,6 +4,10 @@
 #include "utils.h"
 #include "Adafruit_SSD1306.h"
 #include "global.h"
+#include "particle.h"
+#include "stats.h"
+#include "game_state.h"
+#include <CuteBuzzerSounds.h>
 
 void BedroomState::setup() {
   icons[0] = zzzBitmap;
@@ -13,7 +17,13 @@ void BedroomState::setup() {
 }
 
 void BedroomState::update() {
+  global.particleSystem->update();
 
+  if (global.particleSystem->running) {
+    if (millis() % 10 == 0) {
+      global.stats->updateEnergy(1);
+    }
+  }
 }
 
 void BedroomState::render() {
@@ -37,13 +47,30 @@ void BedroomState::render() {
 
 void BedroomState::input(int pin, bool pressed, bool longPressed) {
   if (pin == LEFT_BUTTON_PIN && pressed) {
+    if (global.particleSystem->running) return;
     currentAction++;
     if (currentAction >= actionCount) {
       currentAction = 0;
     }
   } else if (pin == MIDDLE_BUTTON_PIN && pressed) {
     if (currentAction == 0) {
-      
+      if (global.particleSystem->running) {
+        cute.play(S_JUMP);
+        global.particleSystem->stop();
+      } else {
+        cute.play(S_SLEEPING);
+        global.particleSystem->x = 13;
+        global.particleSystem->y = 34;
+        global.particleSystem->color = SSD1306_WHITE;
+        global.particleSystem->gravity = -1;
+        global.particleSystem->lifetime = 0.2f;
+        global.particleSystem->play();
+      }
+    } else if (currentAction == 1) {
+      global.gameState->hat = !global.gameState->hat;
+      if (global.gameState->hat) {
+        cute.play(S_SURPRISE);
+      }
     }
   }
 }

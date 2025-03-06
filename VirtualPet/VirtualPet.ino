@@ -46,6 +46,8 @@ void setup() {
   MenuState menu;
   GameState game;
 
+  global.gameState = &game;
+
   KitchenState kitchen;
   BedroomState bedroom;
   GameroomState gameroom;

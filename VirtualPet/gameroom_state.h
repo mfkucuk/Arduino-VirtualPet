@@ -4,7 +4,6 @@
 
 struct GameroomState : public State {
 
-  const unsigned char* icons[1];
   int currentAction;
   int actionCount;
 

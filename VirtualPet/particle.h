@@ -1,22 +1,24 @@
 #pragma once
 
+#include "Adafruit_SSD1306.h"
 
 struct ParticleSystem {
   struct Particle {
     int x, y;
     int dx, dy;
-    int gravity;
-    float lifetime;
     float age;
     bool alive;
   };
 
-  int particleCount = 2;
-  Particle particles[2];
+  int particleCount = 4;
+  Particle particles[4];
   int x, y;
+  int gravity = 1;
+  int color = SSD1306_BLACK;
+  float lifetime = 0.1f;
   bool running = false;
 
-  void play(const int& minDx, const int& maxDx, const int& minDy, const int& maxDy, const int& gravity, const float& lifetime);
+  void play();
   void stop();
   void update();
   void render();

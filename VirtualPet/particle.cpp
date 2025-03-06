@@ -1,42 +1,51 @@
 #include "particle.h"
 
+#include "Arduino.h"
 #include "global.h"
-#include <avr/pgmspace.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-void ParticleSystem::play(const int& minDx, const int& maxDx, const int& minDy, const int& maxDy, const int& gravity, const float& lifetime) {
+void ParticleSystem::play() {
   running = true;
+
+  randomSeed(analogRead(0));
 
   for (int i = 0; i < particleCount; i++) {
     particles[i].x = x;
     particles[i].y = y;
 
-    particles[i].dx = (int)random(minDx, maxDx + 1);
-    particles[i].dy = (int)random(minDy, maxDy + 1);
-    particles[i].lifetime = lifetime;
+    particles[i].dx = random(-1, 2);
+    particles[i].dy = random(0, 2);
     particles[i].age = 0;
   }
 }
 
 void ParticleSystem::stop() {
   running = false;
+  for (int i = 0; i < particleCount; i++) {
+    particles[i].alive = false;
+  }
 }
 
 void ParticleSystem::update() {
 
+  if (!running) return;
+
   for (int i = 0; i < particleCount; i++) {
     if (!particles[i].alive) {
-      if (random(1, 100) == 50) {
+      if (random(1, 20) == 10) {
         particles[i].alive = true;
       }
     } else {
       particles[i].x += particles[i].dx;
-      particles[i].y += particles[i].dy + particles[i].gravity;
+      particles[i].y += particles[i].dy + gravity;
 
-      if (particles[i].age > particles[i].lifetime) {
+      if (particles[i].age > lifetime) {
         particles[i].x = x;
         particles[i].y = y;
+        particles[i].age = 0;
+        particles[i].dx = random(-1, 2);
+        particles[i].dy = random(0, 2);
 
         if (!running) {
           particles[i].alive = false;
@@ -49,9 +58,12 @@ void ParticleSystem::update() {
 }
 
 void ParticleSystem::render() {
+
+  if (!running) return;
+
   for (int i = 0; i < particleCount; i++) {
     if (particles[i].alive) {
-      global.display->drawPixel(particles[i].x, particles[i].y, SSD1306_WHITE);
+      global.display->fillCircle(particles[i].x, particles[i].y, 1, color);
     }
   }
 }

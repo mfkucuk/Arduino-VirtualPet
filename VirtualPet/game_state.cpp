@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "game_state.h"
 
 #include "HardwareSerial.h"
@@ -5,6 +6,7 @@
 
 #include "global.h"
 #include "assets.h"
+#include "particle.h"
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "stats.h"
@@ -15,6 +17,18 @@ void GameState::setup() {
 
 void GameState::update() {
   rooms[currentRoom]->update();
+
+  if (millis() % 500 == 0) {
+    global.stats->updateHunger(-1);
+  }
+
+  if (millis() % 600 == 0) {
+    global.stats->updateEnergy(-1);
+  }
+
+  if (millis() % 700 == 0) {
+    global.stats->updateHappiness(-1);
+  }
 }
 
 void GameState::render() {
@@ -23,7 +37,15 @@ void GameState::render() {
 
   rooms[currentRoom]->render();
   
-  global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 10, rabbitBitmap, 16, 26, SSD1306_WHITE);
+  if (!global.particleSystem->running || global.particleSystem->color == SSD1306_BLACK) {
+    global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 10, rabbitBitmap, 16, 26, SSD1306_WHITE);
+
+    if (hat) {
+      global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 2, hatBitmap, 16, 14, SSD1306_WHITE);
+    }
+  } 
+
+  global.particleSystem->render();
 
   if (statsOpen) {
     global.display->fillRect(4, 20, 120, 60, SSD1306_WHITE);
@@ -37,10 +59,6 @@ void GameState::render() {
     global.display->setCursor(6, 29);
     global.display->print(F("Age: "));
     global.display->print(global.stats->age);
-
-    global.display->setCursor(70, 29);
-    global.display->print(F("$: "));
-    global.display->print(global.stats->money);
 
     global.display->setCursor(6, 37);
     global.display->print(F("Happiness:"));
@@ -60,12 +78,20 @@ void GameState::render() {
 }
 
 void GameState::input(int pin, bool pressed, bool longPressed) {
+  if (pin == MIDDLE_BUTTON_PIN && longPressed) {
+    global.stateManager->changeState(MENU_STATE);
+  }
+
   if (pin == LEFT_BUTTON_PIN && longPressed) {
     statsOpen = !statsOpen; 
   }
 
   if (statsOpen) return;
   
+  rooms[currentRoom]->input(pin, pressed, longPressed);
+
+  if (global.particleSystem->running) return;
+
   if (pin == RIGHT_BUTTON_PIN && pressed) {
     currentRoom++;
     if (currentRoom > 2) {
@@ -73,6 +99,4 @@ void GameState::input(int pin, bool pressed, bool longPressed) {
     }
     rooms[currentRoom]->setup();
   }
-
-  rooms[currentRoom]->input(pin, pressed, longPressed);
 }

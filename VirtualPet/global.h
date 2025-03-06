@@ -28,12 +28,14 @@ struct StateManager;
 struct Adafruit_SSD1306;
 struct Stats;
 struct ParticleSystem;
+struct GameState;
 
 struct Global {
   StateManager* stateManager;
   Adafruit_SSD1306* display;
   Stats* stats;
   ParticleSystem* particleSystem;
+  GameState* gameState;
 };
 
 extern Global global;

@@ -1,3 +1,4 @@
+#include "Arduino.h"
 #include "kitchen_state.h"
 
 #include "assets.h"
@@ -5,6 +6,8 @@
 #include "Adafruit_SSD1306.h"
 #include "particle.h"
 #include "utils.h"
+#include "stats.h"
+#include <CuteBuzzerSounds.h>
 
 void KitchenState::setup() {
   icons[0] = cookieBitmap;
@@ -14,6 +17,12 @@ void KitchenState::setup() {
 
 void KitchenState::update() {
   global.particleSystem->update();
+
+  if (global.particleSystem->running) {
+    if (millis() % 10 == 0) {
+      global.stats->updateHunger(1);
+    }
+  }
 }
 
 void KitchenState::render() {
@@ -33,8 +42,6 @@ void KitchenState::render() {
   global.display->drawBitmap(111, 35, kitchenTableBitmap, 16, 26, SSD1306_WHITE);
   global.display->drawBitmap(10, 22, kitchenFurnaceBitmap, 16, 33, SSD1306_WHITE);
   global.display->drawBitmap(34, 18, doorBitmap, 16, 22, SSD1306_WHITE);
-
-  global.particleSystem->render();
 }
 
 void KitchenState::input(int pin, bool pressed, bool longPressed) {
@@ -45,9 +52,17 @@ void KitchenState::input(int pin, bool pressed, bool longPressed) {
     }
   } else if (pin == MIDDLE_BUTTON_PIN && pressed) {
     if (currentAction == 0) {
-      global.particleSystem->x = 64;
-      global.particleSystem->y = 28;
-      global.particleSystem->play(-1, 1, 0, 1, 1, 0.2f);
+      if (global.particleSystem->running) {
+        global.particleSystem->stop();
+      } else {
+        global.particleSystem->x = 62;
+        global.particleSystem->y = 37;
+        global.particleSystem->color = SSD1306_BLACK;
+        global.particleSystem->gravity = 1;
+        global.particleSystem->lifetime = 0.1f;
+        global.particleSystem->play();
+        cute.play(S_HAPPY_SHORT);
+      }
     }
   }
 }
