@@ -1,7 +1,6 @@
-#include "Arduino.h"
 #include "game_state.h"
 
-#include "HardwareSerial.h"
+#include "Arduino.h"
 #include <CuteBuzzerSounds.h>
 
 #include "global.h"
@@ -19,7 +18,7 @@ void GameState::update() {
   rooms[currentRoom]->update();
 
   if (millis() % 500 == 0) {
-    global.stats->updateHunger(-1);
+    global.stats->updateHunger(1);
   }
 
   if (millis() % 600 == 0) {
@@ -38,10 +37,10 @@ void GameState::render() {
   rooms[currentRoom]->render();
   
   if (!global.particleSystem->running || global.particleSystem->color == SSD1306_BLACK) {
-    global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 10, rabbitBitmap, 16, 26, SSD1306_WHITE);
+    global.display->drawBitmap(SCREEN_WIDTH / 2 - 16 / 2, SCREEN_HEIGHT / 2 - 26 / 2 + 10, rabbitBitmap, 16, 26, SSD1306_WHITE);
 
     if (hat) {
-      global.display->drawBitmap(SCREEN_WIDTH / 2 - RABBIT_WIDTH / 2, SCREEN_HEIGHT / 2 - RABBIT_HEIGHT / 2 + 2, hatBitmap, 16, 14, SSD1306_WHITE);
+      global.display->drawBitmap(SCREEN_WIDTH / 2 - 16 / 2, SCREEN_HEIGHT / 2 - 26 / 2 + 2, hatBitmap, 16, 14, SSD1306_WHITE);
     }
   } 
 
@@ -50,11 +49,10 @@ void GameState::render() {
   if (statsOpen) {
     global.display->fillRect(4, 20, 120, 60, SSD1306_WHITE);
 
-    global.display->setTextSize(1);
     global.display->setTextColor(SSD1306_BLACK);
     global.display->setCursor(6, 21);
     global.display->print(F("Name: "));
-    global.display->print(F("Ribbit"));
+    global.display->print(F("Mukremin"));
 
     global.display->setCursor(6, 29);
     global.display->print(F("Age: "));

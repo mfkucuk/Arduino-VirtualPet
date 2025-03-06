@@ -109,7 +109,6 @@ void PongState::render() {
   global.display->fillRect(paddle1.x, paddle1.y, 5, 16, SSD1306_WHITE);
   global.display->fillRect(paddle2.x, paddle2.y, 5, 16, SSD1306_WHITE);
 
-  global.display->setTextSize(1);
   global.display->setTextColor(SSD1306_WHITE);
   global.display->setCursor(64 - 12, 2);
   global.display->println(playerScore);

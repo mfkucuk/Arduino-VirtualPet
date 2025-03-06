@@ -2,8 +2,6 @@
 
 #include "assets.h"
 #include "utils.h"
-#include "Adafruit_SSD1306.h"
-#include "global.h"
 #include "particle.h"
 #include "stats.h"
 #include "game_state.h"

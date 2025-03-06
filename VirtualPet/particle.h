@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Adafruit_SSD1306.h"
-
 struct ParticleSystem {
   struct Particle {
     int x, y;
@@ -14,7 +12,7 @@ struct ParticleSystem {
   Particle particles[4];
   int x, y;
   int gravity = 1;
-  int color = SSD1306_BLACK;
+  int color;
   float lifetime = 0.1f;
   bool running = false;
 

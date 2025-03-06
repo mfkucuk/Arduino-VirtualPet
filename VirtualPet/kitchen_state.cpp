@@ -1,9 +1,6 @@
-#include "Arduino.h"
 #include "kitchen_state.h"
 
 #include "assets.h"
-#include "global.h"
-#include "Adafruit_SSD1306.h"
 #include "particle.h"
 #include "utils.h"
 #include "stats.h"
@@ -20,7 +17,7 @@ void KitchenState::update() {
 
   if (global.particleSystem->running) {
     if (millis() % 10 == 0) {
-      global.stats->updateHunger(1);
+      global.stats->updateHunger(-1);
     }
   }
 }

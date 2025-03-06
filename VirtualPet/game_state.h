@@ -2,9 +2,6 @@
 
 #include "state.h"
 
-#define RABBIT_WIDTH 16
-#define RABBIT_HEIGHT 26
-
 struct GameState : public State {
 
   int currentRoom = 0;

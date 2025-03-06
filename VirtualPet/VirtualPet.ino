@@ -12,6 +12,8 @@
 
 #include "pong_state.h"
 
+#include "particle.h"
+
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -27,12 +29,6 @@ bool buttonsHeld[3];
 unsigned long pressStartTimes[3];
 
 Global global;
-
-extern int __heap_start, *__brkval;
-int freeMemory() {
-  int v;
-  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
-}
 
 void setup() {
   Serial.begin(9600);
